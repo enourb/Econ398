@@ -1,0 +1,20 @@
+library(tidyverse)
+library(janitor)
+
+zillow <- read.csv(file = "data/uncleaned/Neighborhood_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv") %>% clean_names()
+
+## Pivot to get date/price cols
+zillow <- zillow %>%
+  pivot_longer(cols = 10:ncol(zillow), names_to = "date", values_to = "zhvi")
+
+## Clean Dates
+zillow <- zillow %>%
+  mutate(date = substr(date, start = 2, stop = 100),
+         date = as.Date(x = date, format = "%Y_%m_%d"))
+
+## Remove redundant variables
+zillow <- zillow %>%
+  select(-state_name)
+
+save(zillow, file = "data/cleaned/zillow.RData")
+
