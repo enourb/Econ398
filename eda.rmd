@@ -7,10 +7,65 @@ output: html_document
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(skimr)
+library(knitr)
+
 load("data/cleaned/plots.RData")
+load("data/cleaned/nyc.RData")
 ```
 
 ## Introduction
-The data I have attained thusfar are Zillow's housing data and ACS 2015-2019 data. Both data sets are at the zip code level of granularity. 
+The data I have attained thusfar are Zillow's housing data and American Community Survey (ACS) 2015-2019 data. Both data sets are at the zip code level of granularity. 
 I have data for all U.S. zip codes but for the purposes of this analysis I restrict the sample to zip codes within the 5 boroughs of New York City.
 
+## Occupation
+ACS has five broad categories of occupation: Management, business, science, and arts occupations; Service occupations; Sales and office occupations; Natural resources, construction, and maintenance occupations; and Production, transportation, and material moving occupations. These categories can be further subdivided, but I find this level of generalization to be optimal. For each zip code, I calculated the proportion of the population that is employed in each occupation category. My next goal was to label each zip code based on the occupation that is dominant. However, some occupations are significantly more prevalent in NYC than others.
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+nyc_skim <- nyc %>% 
+  select(occup_mbsa_prop:occup_prod_prop) %>%
+  rename("Proportion Management" = occup_mbsa_prop,
+         "Proportion Service" = occup_serv_prop,
+         "Proportion Sales" = occup_sales_prop,
+         "Proportion Construction" = occup_constr_prop,
+         "Proportion Production" = occup_prod_prop)
+kable(skim_without_charts(nyc_skim), col.names = c("Type", "Variable", "Missing", 
+                                                   "Complete Rate", "Mean", "Standard Deviation", 
+                                                   "0th Percentile", "25th Percentile", "50th Percentile",
+                                                   "75th Percentile", "100th Percentile"))
+```
+Instead, I decided to do relative dominance of an occupation based on percentile. For example, a zip code where 17% of the population works in production would be considered to have a large production labor force. Whichever occupation has the highest within-group percentile becomes the occupation label for the zip code. To continue my example, if this zip code was also 43% management, 20% service, 10% sales and 5% construction, this zip code would be labeled "production" because all other proportions are at or below the mean for their group.\
+We can see distinct trends among some of the occupation groups. Management zip codes experience a dip in housing value that is not experienced by service or production zip codes. This could reflect the inequality in remote capabilities across occupations or the financial capabilities of management employees to fund a relocation.
+```{r, echo=FALSE}
+occup_plot
+```
+
+## Education
+ACS has education categories such as kindergarten, 1st grade, 2nd grade, etc. I converted these categories into number of years of edcuation and then calculated the mean level of education in the zip. Labeling zip codes by education was much more straightforward. I rounded each zip's average years of education to an integer and grouped them by this value. \
+Again we see a dip in housing value not experienced by every category. This time, it is most pronounced in zips with average educational attainment of 17 or 18. It is somewhat present in 16.
+
+```{r, echo=FALSE}
+educ_plot
+```
+
+## Family
+ACS has two main categories for households: family and non-family. I labeled each zip code based on whether or not it was majority family households. \
+Unfortunatley, these categories are less comparable. I believe that the explanation is that wealthy families with occupations in New York City reside outside of New York City.
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+family_plot
+```
+
+## Income
+Instead of seeing value across time by categorizing income levels, I decided to do a scatter plot. The dependent variable became % change in house price so that all income levels were comparable. It appears that high, positive changes in house value are only found in low income areas.
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+inc_plot
+```
+
+## Correlation Heat Map
+```{r, echo=FALSE}
+corr_plot
+```
+
+## Further Plans
+I can get data more granular than zip level. The problem is lack of consistency in coding. Zillow has "neighborhood" level house pricing data and ACS has "tract" level data. To synthesize the data, I need to use ArcGIS Pro to calculate the overlap between the two methods of division.\
+https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/tabulate-intersection.htm \
+I will then take neighborhood-tract pairs that have the highest level of overlap. This might take some time, so I will work with zip-level data for now.
