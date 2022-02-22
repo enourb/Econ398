@@ -8,3 +8,4 @@ data/uncleaned/nhgis0051_ds244_20195_blck_grp.csv filter=lfs diff=lfs merge=lfs 
 *.R filter=lfs diff=lfs merge=lfs -text
 data/uncleaned/Zip_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv filter=lfs diff=lfs merge=lfs -text
 data/uncleaned/nhgis0053_ds244_20195_zcta.csv filter=lfs diff=lfs merge=lfs -text
+data/uncleaned/nhgis0054_ds244_20195_zcta.csv filter=lfs diff=lfs merge=lfs -text
