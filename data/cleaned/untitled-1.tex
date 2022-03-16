@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{bbm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\title{Econ 398 Model}
+\author{Ethan Nourbash}
+\date{February 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Set Up}
+My model is inspired by Diamond 2016 with several key changes to provide insight on the impact of remote work on worker location choice. (1) The place of residence is determined separately from place of work; (2) the local good price is endogenous; (3) amenity utility function has two factors, commute time and density of entertainment venues, that are both endogenous; (4) proportion of work done from home is integrated as an endogenous variable.\\
+Assume that worker $i$ has a job in the city center where he is paid a wage $W_{i,t}$. He chooses to live in region $p$ that offers him the most desirable bundle of local good prices and amenities. Let this be represented by a Cobb-Douglas utility function of local goods $M$ with price $R_{p,t}$, national goods $O$ with a price $P_t$, and local amenities $A_{i,p,t}$. Let $s_i$ be the worker i's amenity utility function.
+\begin{equation}
+U(M, O, p) := M^\alpha O^{1-\alpha}e^{s_i(A_{i,p,t})}
+\end{equation}
+\begin{equation}
+\textrm{s.t } R_{p,t}M + P_tO \leq W_{i,t}
+\end{equation}
+\\
+Let $R_{p,t}$ be a function of distance from city center $d_p$ such that $R_{p,t}'(d_p) < 0$ and $R_{p,t}''(d_p) > 0$. In particular, we will assume that the price of local goods takes this particular functional form.
+\begin{equation} \label{rent}
+R_{p,t} := R_{t} + \beta_{\delta_1} d_p + \beta_{\delta_2} d_p^\delta
+\end{equation}
+Where $R_{t}$ is the rent in the city center and $0 < \delta$.\\ \\
+Let $A_{i,p,t}$ contain two variables: effective commute time, $c_{i,p,t}$, and density of entertainment venues, $e_{p,t}$. Let $s_{i}$ have the following properties: $\frac{\partial}{\partial c}s_{i}<0$, $\frac{\partial}{\partial e}s_{i}>0$, $\frac{\partial^2}{\partial e^2}s_{i,t}<0$. Since effective commute time is partially determined by amount of work done at home, $A_{i,p,t}$ will respond endogenously to the amount of WFH individual i experiences. This allows $c_{i,p,t}$ and $e_{p,t}$ to have depreciating impact on the function. To achieve this goal, let $s_i$ have the following form.
+\begin{equation}
+s_i(A_{i,p,t}) := \beta_c c_{i,p,t} + \beta_e e_{p,t}
+\end{equation}
+Where $\beta_c$ and $\beta_e$ are preference coefficients such that $\beta_c < 0$, $\beta_e > 0$.\\ \\
+Let $c_{i,p,t}$ be a function of distance from city center, with the following functional form
+\begin{equation}
+c_{i,p,t} := (1-r_i)\beta_r d_p
+\end{equation}
+Where $d_p$ is the distance to city center from place of residence, $d_p > 0$; $\beta_r d_p$ be the time it takes to commute distance $d_p$, $\beta_r > 0$; and $r_i$ is the exogenous share of work done remotely,$0 < r_i < 1$.\\
+The assumption behind this specified commute time function is that workers care about the mean commute time they experience, effective commute time, rather that the commute time of traveling distance $d_p$. For example, let worker j live 10 miles from her office, she works from home $20\%$ of the time, and it takes 40 minutes to commute 10 miles to her office. Her effective commute time would be 32 minutes. When deciding whether or not to relocate, she considers her current commute to be 32 minutes rather than 40.\\ \\
+For further simplification, assume that $e_{p,t}$ is a function of distance from city center.\\
+\begin{equation}
+e_{p,t} := e_{t} + \beta_{\psi_1} d_p + \beta_{\psi_2} d_p^\psi
+\end{equation}
+Where $e_{t}$ is entertainment density at city center, $\beta_{\psi_2} < 0$, and $0 < \psi < 1$.
+
+\section{Evaluation}
+\subsection{Marginal Utility Equivalence}
+The first order conditions of the household problem yield the following.
+$$\frac{U_M}{R_{p,t}} = \frac{U_O}{P_t}$$
+$$\frac{\alpha M^{\alpha - 1} O^{1-\alpha}e^{s_g(A_{i,p,t})}}{R_{p,t}} = \frac{ (1-\alpha)M^{\alpha}O^{-\alpha}e^{s_g(A_{i,p,t})}}{P_t}$$
+$$\frac{\alpha O}{R_{p,t}} = \frac{(1-\alpha)M}{P_t}$$
+$$O = \frac{(1 - \alpha)}{\alpha}\frac{R_{p,t}}{P_t}M$$
+\subsection{Budget Constraint}
+Substitute first order condition results for $O$ in the budget constraint.
+$$R_{p,t}M + P_t\frac{(1 - \alpha)}{\alpha}\frac{R_{p,t}}{P_t}M \leq W_{i,t}$$
+$$(1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}M \leq W_{i,t}$$
+Assume worker is using his entire wage to solve for $M$.
+$$M = \frac{W_{i,t}}{(1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}}$$
+\subsection{Utility Maximization}
+If the worker is maximizing his utility function, he is maximizing the log-transformed utility function.
+$$\max_{M, O,p} ln(U) = \alpha ln(M) + (1-\alpha)ln(O) + s_i(A_{i,p,t})$$
+Substitute in first order condition.
+$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}\frac{R_{p,t}}{P_t}M) + s_i(A_{i,p,t})$$
+$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha) \left [ln(\frac{(1 - \alpha)}{\alpha}) + ln(\frac{R_{p,t}}{P_t}) + ln(M) \right ] + s_i(A_{i,p,t})$$
+$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + (1-\alpha)ln(M) + s_i(A_{i,p,t})$$
+$$\max_{M, p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + ln(M) + s_i(A_{i,p,t})$$
+Substitute in budget constraint.
+$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + ln \left (\frac{W_{i,t}}{(1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}} \right ) + s_i(A_{i,p,t})$$
+$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + ln(W_{i,t}) - ln((1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}) + s_i(A_{i,p,t})$$
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(R_{p,t}) \\ 
+     & - (1-\alpha)ln(P_t) + ln(W_{i,t}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) - ln(R_{p,t}) + s_i(A_{i,p,t})
+    \end{aligned}
+\end{equation*}
+$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{p,t}) - (1-\alpha)ln(P_t) + ln(W_{i,t}) + s_i(A_{i,p,t})$$
+Substitute in amenity preference functional form.
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{p,t}) \\
+    & - (1-\alpha)ln(P_t) + ln(W_{i,t}) + \beta_c c_{i,p,t} + \beta_e e_{p,t}
+    \end{aligned}
+\end{equation*}
+Substitute in $R$, $c$, and $e$'s functional form.
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{t} + \beta_\delta d_p^\delta)\\
+    &  - (1-\alpha)ln(P_t) + ln(W_{i,t}) + \beta_c ((1-r_i)\beta_r d_p) + \beta_e (e_{t} + \beta_{\psi_1} d_p + \beta_{\psi_2} d_p^\psi)
+    \end{aligned}
+\end{equation*}
+
+\section{Potential Further Modifications}
+1) Create a moving cost, that way the worker only moves if the new utility is higher than current+cost
+2) Make remote work alter career trajectory of the worker. Turn the problem into one that considers maximizing lifetime earnings where wage is a function of time and proportion of work done remotely.
+
+\section{Example}
+Assume the rent function has the following values (See 5: Rent Function Form):\\
+$$R_{t} = 4102,  \beta_{\delta1} = 93.91, \beta_{\delta2} = -886.93, \delta = .5$$
+Assume an average commute speed of 40 mph (1.5 minutes per mile):\\
+$$\beta_r = 1.5$$
+Assume the entertainment density function has the following values (I just picked these values to make the math work):\\
+$$e_t = 4, \beta_{\psi_1} = .094, \beta_{\psi_2} = -.887$$
+Assume the amenity utility function has the following values (I just picked these values to make the math work):\\
+$$\beta_c = -0.069, \beta_e = .04$$
+I pick the rest of these so it works:\\
+$$W_{i,t} = 5500, \alpha = .75, P_t = 400$$
+\includegraphics[scale=.5]{images/remote_effect.png}
+When the amount of remote work increases, the optimal location choice gets further from the city.
+
+\section{Rent Functional Form}
+To estimate equation (\ref{rent}), I run a series of regressions predicting housing price given distance from city center. Given regional differences, explored in the econometrics section, I restrict my analysis to New York. The city center is defined as the zip code with the largest population per county. The distance is defined as the number of miles between the given zip-code and the zip-code of the most populous zip-code in the county.\\
+\includegraphics[scale=.5]{images/rent_scatter.png}
+There appears to be a general non-linear convex relationship between distance and price from 0 to 40 miles away from the city center, but many outliers that do not display this property past the 40-mile mark.\\
+I estimate a series of OLS regressions allowing $\delta$ to take 1000 values between 0 and 5. The results are as follows.\\
+\includegraphics[scale=.5]{images/delta_fit.png}
+The accuracy peaks at $\delta = .5$, so that is the value I choose for my example problem.\\
+\includegraphics[scale=.5]{images/delta_plot.png}
+\end{document}
