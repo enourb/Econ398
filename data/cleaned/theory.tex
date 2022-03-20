@@ -58,62 +58,30 @@ $$(1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}M \leq W_{i,t}$$
 Assume worker is using his entire wage to solve for $M$.
 $$M = \frac{W_{i,t}}{(1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}}$$
 \subsection{Utility Maximization}
-If the worker is maximizing his utility function, he is maximizing the log-transformed utility function.
-$$\max_{M, O,p} ln(U) = \alpha ln(M) + (1-\alpha)ln(O) + s_i(A_{i,p,t})$$
-Substitute in first order condition.
-$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}\frac{R_{p,t}}{P_t}M) + s_i(A_{i,p,t})$$
-$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha) \left [ln(\frac{(1 - \alpha)}{\alpha}) + ln(\frac{R_{p,t}}{P_t}) + ln(M) \right ] + s_i(A_{i,p,t})$$
-$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + (1-\alpha)ln(M) + s_i(A_{i,p,t})$$
-$$\max_{M, p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + ln(M) + s_i(A_{i,p,t})$$
-Substitute in budget constraint.
-$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + ln \left (\frac{W_{i,t}}{(1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}} \right ) + s_i(A_{i,p,t})$$
-$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p,t}}{P_t}) + ln(W_{i,t}) - ln((1 + \frac{(1 - \alpha)}{\alpha})R_{p,t}) + s_i(A_{i,p,t})$$
+After combining the equations, log-transforming, and simplifying (See Appendix 9.5), we get the following results.
 \begin{equation*}
     \begin{aligned}
-    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(R_{p,t}) \\ 
-     & - (1-\alpha)ln(P_t) + ln(W_{i,t}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) - ln(R_{p,t}) + s_i(A_{i,p,t})
-    \end{aligned}
-\end{equation*}
-$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{p,t}) - (1-\alpha)ln(P_t) + ln(W_{i,t}) + s_i(A_{i,p,t})$$
-Substitute in amenity preference functional form.
-\begin{equation*}
-    \begin{aligned}
-    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{p,t}) \\
-    & - (1-\alpha)ln(P_t) + ln(W_{i,t}) + \beta_c c_{i,p,t} + \beta_e e_{p,t}
-    \end{aligned}
-\end{equation*}
-Substitute in $R$, $c$, and $e$'s functional form.
-\begin{equation*}
-    \begin{aligned}
-    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{t} + \beta_\delta d_p^\delta)\\
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{t} + \beta_{\delta_1} d_p + \beta_{\delta_2} d_p^\delta)\\
     &  - (1-\alpha)ln(P_t) + ln(W_{i,t}) + \beta_c ((1-r_i)\beta_r d_p) + \beta_e (e_{t} + \beta_{\psi_1} d_p + \beta_{\psi_2} d_p^\psi)
     \end{aligned}
 \end{equation*}
-
-\section{Potential Further Modifications}
-1) Create a moving cost, that way the worker only moves if the new utility is higher than current+cost
-2) Make remote work alter career trajectory of the worker. Turn the problem into one that considers maximizing lifetime earnings where wage is a function of time and proportion of work done remotely.
-
 \section{Example}
 Assume the rent function has the following values (See 5: Rent Function Form):\\
 $$R_{t} = 4102,  \beta_{\delta1} = 93.91, \beta_{\delta2} = -886.93, \delta = .5$$
 Assume an average commute speed of 40 mph (1.5 minutes per mile):\\
 $$\beta_r = 1.5$$
-Assume the entertainment density function has the following values (I just picked these values to make the math work):\\
-$$e_t = 4, \beta_{\psi_1} = .094, \beta_{\psi_2} = -.887$$
-Assume the amenity utility function has the following values (I just picked these values to make the math work):\\
-$$\beta_c = -0.069, \beta_e = .04$$
-I pick the rest of these so it works:\\
-$$W_{i,t} = 5500, \alpha = .75, P_t = 400$$
+Assume the entertainment density function has the following values (assume a proportional to rent decline):\\
+$$e_t = 4, \beta_{\psi_1} = .094, \beta_{\psi_2} = -.887, \psi = .5$$
+Assume the following values reasonable amenity utility function coefficients:\\
+$$\beta_c = -0.0346, \beta_e = .02$$
+Assume average income and \$400 national good spending (average monthly car payment):\\
+$$W_{i,t} = 5500, P_t = 400$$
+Assume the following reasonable estimate for elasticity of consumption:\\
+$$\alpha = .75$$
 \includegraphics[scale=.5]{images/remote_effect.png}
-When the amount of remote work increases, the optimal location choice gets further from the city.
-
-\section{Rent Functional Form}
-To estimate equation (\ref{rent}), I run a series of regressions predicting housing price given distance from city center. Given regional differences, explored in the econometrics section, I restrict my analysis to New York. The city center is defined as the zip code with the largest population per county. The distance is defined as the number of miles between the given zip-code and the zip-code of the most populous zip-code in the county.\\
-\includegraphics[scale=.5]{images/rent_scatter.png}
-There appears to be a general non-linear convex relationship between distance and price from 0 to 40 miles away from the city center, but many outliers that do not display this property past the 40-mile mark.\\
-I estimate a series of OLS regressions allowing $\delta$ to take 1000 values between 0 and 5. The results are as follows.\\
-\includegraphics[scale=.5]{images/delta_fit.png}
-The accuracy peaks at $\delta = .5$, so that is the value I choose for my example problem.\\
-\includegraphics[scale=.5]{images/delta_plot.png}
+Assume the worker could effectively complete 30\% of her work from home. She experienced no WFH previously but a company policy changed experienced WFH to its fullest potential (30\%). When the amount of remote work increases, her optimal location choice gets further from the city. This reflects commute time being traded off for more local good consumption when effective commute time decreased.
+\section{Comparison Example}
+Let the above variable values represent that of a young urban worker. Let an old urban worker have the same values except for the amenity preference function coefficients. Let the old worker not care about entertainment ($\beta_e = 0$) and care about commute time slightly less ($\beta_c = .02768$).\\
+\includegraphics[scale=.5]{images/remote_compare.png}
+As can be seen in the above figure, the young and old worker have different initial and final optimal locations. Furthermore, the old worker experiences a larger change in optimal log(Utility) and change in optimal distance from city center. If there were to be any constant moving cost associated with changing locations, the old worker would be more likely to still find the move profitable. This model suggests that amenity preferences can influence the willingness to move away from a city when amount of time working remotely increases. If this theory holds true along with the assumption that there is some homogeneous amenity preferences within education/age/family-status groups, then the demographics of a region should influence the percent change in housing price.
 \end{document}

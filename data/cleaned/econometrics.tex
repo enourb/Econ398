@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Econ 398 Econometrics}
+\author{Ethan Nourbash}
+\date{March 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Equation 1}
+\begin{equation}
+    \begin{aligned}
+    PctIncPrice_z & = \beta_0 + \beta_1 Remote_z + \beta_2 Income_z \\
+                   & + \beta_4 Commute_z + \beta_5 Family_z + \beta_6 Age_z \\
+                   & (+ \sum_{s=1}^{49}\beta_{6+s}StateS_z)
+    \end{aligned}
+\end{equation}
+\section{Equation 2}
+\begin{equation}
+    \begin{aligned}
+    PctIncPrice_z & = \beta_0 + \beta_1 Remote_z + \beta_2 Income_z \\
+                   & + \beta_4 Commute_z + \beta_5 Family_z + \beta_6 Age_z \\
+                   & + \beta_7 Remote_z*Commute_z \\
+                   & + \beta_8 Remote_z*Family_z + \beta_9 Remote_z*Age_z \\
+                   & (+\sum_{s=1}^{49}\beta_{9+s}StateS_z)
+    \end{aligned}
+\end{equation}
+\end{document}
