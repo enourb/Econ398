@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{bbm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\title{Econ 398 Model}
+\author{Ethan Nourbash}
+\date{February 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Set Up}
+My model is inspired by Diamond 2016, with several key changes to provide insight on the impact of remote work on worker location choice: (1) The place of residence is determined separately from place of work; (2) the local good price is endogenous; (3) the amenity utility function has two factors, commute time and density of entertainment venues, that are both endogenous; and (4) the proportion of work done from home is integrated as an exogenous variable.\\
+Assume that worker $i$ has a job in the city center where he is paid a wage $W_{i}$. He chooses to live in region $p$ that offers him the most desirable bundle of local good prices and amenities. Let this be represented by a Cobb-Douglas utility function of local goods $M$ with price $R_{p}$, national goods $O$ with a price $P$, and local amenities $A_{i,p}$. Let $s_i$ be the worker i's amenity utility function.
+\begin{equation}
+U(M, O, p) := M^\alpha O^{1-\alpha}e^{s_i(A_{i,p})}
+\end{equation}
+\begin{equation}
+\textrm{s.t } R_{p}M + PO \leq W_{i}
+\end{equation}
+\\
+Let rent, $R_{p}$, be a function of distance from city center $c_p$ such that $R_{p}'(c_p) < 0$ and $R_{p}''(c_p) > 0$. In particular, we will assume that the price of local goods takes this particular functional form.
+\begin{equation} \label{rent}
+R_{p} := \beta_{R_0} + \beta_{R_1} c_p + \beta_{R_2} c_p^2
+\end{equation}
+Where $\beta_{R_0} > 0$ is the intercept, $\beta_{R_1} < 0$, and $\beta_{R_2} > 0$. This equation says that rent is highest in the city center ($c_p = 0$) and all other rent in the region is determined by a decreasing convex function of how long it takes to get to the city.\\ \\
+Let the amenity vector, $A_{i,p}$, contain two variables: mean commute time to work, $c_{i,p}$, and density of entertainment venues, $e_{p}$. Let the amenity utility function, $s_{i}$, have the following properties: $\frac{\partial}{\partial c}s_{i}<0$ and $\frac{\partial}{\partial e}s_{i}>0$. Since mean commute time is partially determined by amount of work done at home, $A_{i,p}$ will respond endogenously to the amount of WFH individual i experiences. To achieve this goal, let $s_i$ have the following form
+\begin{equation}
+s_i(A_{i,p}) := \beta_{s_0} c_{i,p} + \beta_{s_1} e_{p}
+\end{equation}
+where $\beta_{s_0}$ and $\beta_{s_1}$ are preference coefficients such that $\beta_{s_0} < 0$ and $\beta_{s_1} > 0$. The interpretation of these signs is that the further worker i has to commute, the less happy he is and the larger the amount of entertainment venues around him, the happier he is.\\ \\
+Let $c_{i,p}$ be a function of distance from city center, with the following functional form
+\begin{equation}
+c_{i,p} := (1-r_i) c_p
+\end{equation}
+Where $c_p$ is the commute time to city center from place of residence, $c_p > 0$, and $r_i$ is the exogenous share of work done remotely, $0 < r_i < 1$.\\
+The assumption behind this specified commute time function is that workers care about the mean commute time they experience rather that just the commute time of traveling to the office, $c_p$. For example, let worker i live 40 minutes from his office, he works from home $20\%$ of the time. His mean commute time would be 32 minutes. When deciding whether or not to relocate, he considers his current commute to be 32 minutes rather than 40.\\ \\
+For further simplification, assume that $e_{p}$ is a function of distance from city center.\\
+\begin{equation}
+e_{p} := \beta_{e_0} + \beta_{e_1} c_p + \beta_{e_2} c_p^2
+\end{equation}
+Similar to the rent function, $\beta_{e_0} > 0$ is the intercept, $\beta_{e_1} < 0$, and $\beta_{e_2} > 0$. This function states that entertainment venues are most prevalent at the city center and decreases convexly with respect to the amount of time it takes to get to the city.
+
+\section{Evaluation}
+\subsection{Marginal Utility Equivalence}
+The first order conditions of the household problem yield the following:
+$$\frac{U_M}{R_{p}} = \frac{U_O}{P}$$
+$$\frac{\alpha M^{\alpha - 1} O^{1-\alpha}e^{s_g(A_{i,p})}}{R_{p}} = \frac{ (1-\alpha)M^{\alpha}O^{-\alpha}e^{s_g(A_{i,p})}}{P}$$
+$$\frac{\alpha O}{R_{p}} = \frac{(1-\alpha)M}{P}$$
+$$O = \frac{(1 - \alpha)}{\alpha}\frac{R_{p}}{P}M$$
+\subsection{Budget Constraint}
+Substituting first order condition results for $O$ in the budget constraint yields
+$$R_{p}M + P\frac{(1 - \alpha)}{\alpha}\frac{R_{p}}{P}M \leq W_{i}$$
+$$(1 + \frac{(1 - \alpha)}{\alpha})R_{p}M \leq W_{i}$$
+Assuming worker is using his entire wage to solve for $M$, we have
+$$M = \frac{W_{i}}{(1 + \frac{(1 - \alpha)}{\alpha})R_{p}}$$
+\subsection{Utility Maximization}
+After combining the equations, log-transforming, and simplifying (See Appendix 9.5), we get the following results:
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(\beta_{R_0} + \beta_{R_1} c_p + \beta_{R_2} c_p^2)\\
+    &  - (1-\alpha)ln(P) + ln(W_{i}) + \beta_{s_0} ((1-r_i) c_p) + \beta_{s_1} (\beta_{e_0} + \beta_{e_1} c_p + \beta_{e_2} c_p^2)
+    \end{aligned}
+\end{equation*}
+
+
+\section{Utility Maximization Algebra}
+If the worker is maximizing his utility function, he is maximizing the log-transformed utility function.
+$$\max_{M, O,p} ln(U) = \alpha ln(M) + (1-\alpha)ln(O) + s_i(A_{i,p})$$
+Substitute in first order condition.
+$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}\frac{R_{p}}{P}M) + s_i(A_{i,p})$$
+$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha) \left [ln(\frac{(1 - \alpha)}{\alpha}) + ln(\frac{R_{p}}{P}) + ln(M) \right ] + s_i(A_{i,p})$$
+$$\max_{M, p} ln(U) = \alpha ln(M) + (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p}}{P}) + (1-\alpha)ln(M) + s_i(A_{i,p})$$
+$$\max_{M, p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p}}{P}) + ln(M) + s_i(A_{i,p})$$
+Substitute in budget constraint.
+$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p}}{P}) + ln \left (\frac{W_{i}}{(1 + \frac{(1 - \alpha)}{\alpha})R_{p}} \right ) + s_i(A_{i,p})$$
+$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(\frac{R_{p}}{P}) + ln(W_{i}) - ln((1 + \frac{(1 - \alpha)}{\alpha})R_{p}) + s_i(A_{i,p})$$
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) + (1-\alpha)ln(R_{p}) \\ 
+     & - (1-\alpha)ln(P) + ln(W_{i}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) - ln(R_{p}) + s_i(A_{i,p})
+    \end{aligned}
+\end{equation*}
+$$\max_{p} ln(U) = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{p}) - (1-\alpha)ln(P) + ln(W_{i}) + s_i(A_{i,p})$$
+Substitute in amenity preference functional form.
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(R_{p}) \\
+    & - (1-\alpha)ln(P) + ln(W_{i}) + \beta_{s_0} c_{i,p} + \beta_{s_1} e_{p}
+    \end{aligned}
+\end{equation*}
+Substitute in $R$, $c$, and $e$'s functional form.
+\begin{equation*}
+    \begin{aligned}
+    \max_{p} ln(U) & = (1-\alpha)ln(\frac{(1 - \alpha)}{\alpha}) - ln(1 + \frac{(1 - \alpha)}{\alpha}) + (-\alpha)ln(\beta_{R_0} + \beta_{R_1} c_p + \beta_{R_2} c_p^2)\\
+    &  - (1-\alpha)ln(P) + ln(W_{i}) + \beta_{s_0} ((1-r_i)\beta_r c_p) + \beta_{s_1} (\beta_{e_0} + \beta_{e_1} c_p + \beta_{e_2} c_p^2)
+    \end{aligned}
+\end{equation*}
+\end{document}
